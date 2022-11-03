@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../shared/components/components.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  bool isPasswordShow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,52 +31,50 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
+                  // TextFormField(
+                  //   controller: emailController,
+                  //   keyboardType: TextInputType.emailAddress,
+                  //   onChanged: (value) {
+                  //     print(value);
+                  //   },
+                  //   onFieldSubmitted: (value) {
+                  //     print(value);
+                  //   },
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return 'Email must not be empty';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: const InputDecoration(
+                  //     labelText: 'Email Address',
+                  //     prefixIcon: Icon(Icons.email),
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  // ),
+                  DefaultTextField(
                     controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
-                      print(value);
-                    },
-                    onFieldSubmitted: (value) {
-                      print(value);
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        print('Email must not be empty');
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Email Address',
-                      prefixIcon: Icon(Icons.email),
-                      border: OutlineInputBorder(),
-                    ),
+                    labelText: "Email Address",
+                    textInputType: TextInputType.emailAddress,
+                    prefix: Icons.email, isPassword: false,
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
+                  DefaultTextField(
                     controller: passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    onChanged: (value) {
-                      print(value);
+                    labelText: "Password",
+                    textInputType: TextInputType.visiblePassword,
+                    isPassword: isPasswordShow,
+                    prefix: Icons.lock,
+                    suffix: isPasswordShow
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    suffixPressed: () {
+                      setState(() {
+                        isPasswordShow = !isPasswordShow;
+                      });
                     },
-                    onFieldSubmitted: (value) {
-                      print(value);
-                    },
-                    validator: (value)
-                    {
-                      if (value!.isEmpty) {
-                        print('Password must not be empty');
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                        labelText: "Password",
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye)),
                   ),
                   SizedBox(
                     height: 30,
