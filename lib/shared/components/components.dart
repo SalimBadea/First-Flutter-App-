@@ -29,49 +29,51 @@ class DefaultTextField extends StatelessWidget {
       required this.controller,
       required this.labelText,
       required this.textInputType,
-      this.validateText,
+      this.isPassword = false,
+      this.validate,
       this.suffix,
-      required this.prefix,
-      required this.isPassword,
       this.suffixPressed})
       : super(key: key);
 
   final TextEditingController controller;
   final TextInputType textInputType;
-  String? validateText = '';
   String labelText = '';
-  IconData? suffix = Icons.visibility;
-  IconData prefix;
+  bool? isPassword;
+  IconData? suffix = Icons.remove_red_eye_outlined;
   Function? suffixPressed;
-  bool isPassword = false;
+  String? validate;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       keyboardType: textInputType,
-      obscureText: isPassword,
-      onChanged: (value) {
-        if (kDebugMode) {
-          print(value);
-        }
-      },
-      onFieldSubmitted: (value) {
-        if (kDebugMode) {
-          print(value);
-        }
-      },
+
+      obscureText: isPassword!,
+
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Email must not be empty';
+        if (controller.text.isEmpty) {
+          return '$validate field required';
+        } else {
+          if (labelText == 'Password') {
+            if (controller.text.length < 5) {
+              return 'password must 8 ';
+            }
+          }else if(labelText == 'Email Address'){
+            if(!controller.text.contains("@")){
+              return 'Enter valid Email';
+            }
+          }
         }
       },
       decoration: InputDecoration(
         labelText: labelText,
-        prefixIcon: Icon(prefix),
+        prefixIcon: const Icon(Icons.email),
         suffixIcon: IconButton(
           icon: Icon(suffix),
-          onPressed: suffixPressed!(),
+          onPressed: () {
+            suffixPressed!();
+          },
         ),
         border: const OutlineInputBorder(),
       ),

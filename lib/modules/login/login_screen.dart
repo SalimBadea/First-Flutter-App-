@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/modules/users/users_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/components/components.dart';
@@ -11,6 +12,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+
   bool isPasswordShow = true;
 
   @override
@@ -25,40 +27,19 @@ class _LoginScreenState extends State<LoginScreen> {
               key: formKey,
               child: Column(
                 children: [
-                  Image(
+                  const Image(
                       image: NetworkImage(
                           'https://cdn.logo.com/hotlink-ok/logo-social.png')),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  // TextFormField(
-                  //   controller: emailController,
-                  //   keyboardType: TextInputType.emailAddress,
-                  //   onChanged: (value) {
-                  //     print(value);
-                  //   },
-                  //   onFieldSubmitted: (value) {
-                  //     print(value);
-                  //   },
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return 'Email must not be empty';
-                  //     }
-                  //     return null;
-                  //   },
-                  //   decoration: const InputDecoration(
-                  //     labelText: 'Email Address',
-                  //     prefixIcon: Icon(Icons.email),
-                  //     border: OutlineInputBorder(),
-                  //   ),
-                  // ),
                   DefaultTextField(
                     controller: emailController,
                     labelText: "Email Address",
                     textInputType: TextInputType.emailAddress,
-                    prefix: Icons.email, isPassword: false,
+                    validate: 'email',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   DefaultTextField(
@@ -66,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: "Password",
                     textInputType: TextInputType.visiblePassword,
                     isPassword: isPasswordShow,
-                    prefix: Icons.lock,
                     suffix: isPasswordShow
                         ? Icons.visibility
                         : Icons.visibility_off,
@@ -75,8 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         isPasswordShow = !isPasswordShow;
                       });
                     },
+                    validate: 'password',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   defaultButton(
@@ -86,17 +67,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (formKey.currentState!.validate()) {
                           print('${emailController.text}');
                           print('${passwordController.text}');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UsersScreen(email: emailController.text.toString(), password: passwordController.text.toString()),
+                            ),
+                          );
                         }
                       },
                       text: 'Login'),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don\'t have Account?'),
-                      TextButton(onPressed: () {}, child: Text('SignUp')),
+                      const Text('Don\'t have Account?'),
+                      TextButton(onPressed: () {}, child: const Text('SignUp')),
                     ],
                   ),
                 ],

@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import '../../models/users.dart';
 
 class UsersScreen extends StatelessWidget {
+  UsersScreen({super.key, required this.email, required this.password});
+
+  final String email;
+  final String password;
 
   List<UserModel> users = [
     UserModel(id: 1, name: 'Salem Badiea', phone: '+201068996991'),
@@ -25,20 +29,51 @@ class UsersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Users'),
+        title: const Text('Users'),
       ),
-      body: ListView.separated(
-          itemBuilder: (context, index) => buildUserItem(users[index]),
-          separatorBuilder: (context, index) =>
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  width: double.infinity,
-                  height: 1,
-                  color: Colors.grey[300],
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4),
+              child: Text(
+                'Email: $email',
+                style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold),
               ),
-          itemCount: users.length),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4),
+              child: Text(
+                'Password: $password',
+                style: const TextStyle(color: Colors.black , fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => buildUserItem(users[index]),
+                  separatorBuilder: (context, index) =>
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          width: double.infinity,
+                          height: 1,
+                          color: Colors.grey[300],
+                        ),
+                      ),
+                  itemCount: users.length),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -51,9 +86,9 @@ class UsersScreen extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 25,
-            child: Text('${user.id}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),),
+            child: Text('${user.id}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Padding(
@@ -62,17 +97,17 @@ class UsersScreen extends StatelessWidget {
               children: [
                 Text(
                   '${user.name}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
                   '${user.phone}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.w300,
                   ),
