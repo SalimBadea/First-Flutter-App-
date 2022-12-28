@@ -1,6 +1,4 @@
-import 'package:first_flutter_app/layout/news_layout.dart';
 import 'package:first_flutter_app/modules/login/login_screen.dart';
-import 'package:first_flutter_app/modules/users/users_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,7 +33,7 @@ class MyApp extends StatelessWidget {
           type: BottomNavigationBarType.fixed
         )
       ),
-      home: NewsLayout(),
+      home: LoginScreen(),
     );
   }
 }
